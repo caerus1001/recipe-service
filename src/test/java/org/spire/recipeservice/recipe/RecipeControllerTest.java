@@ -11,7 +11,9 @@ import org.mockito.junit.jupiter.MockitoExtension;
 
 import stubs.RecipeMock;
 
+import java.time.LocalDateTime;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 @ExtendWith(MockitoExtension.class)
@@ -25,7 +27,7 @@ public class RecipeControllerTest {
 
     @Test
     public void addRecipe_addValidRecipe_shouldReturnRecipe() {
-        Recipe recipeMock = RecipeMock.getRecipeMock();
+        Recipe recipeMock = RecipeMock.getRecipe();
 
         Mockito.when(recipeServiceMock.addRecipe(Mockito.any(Recipe.class))).thenReturn(recipeMock);
 
@@ -46,11 +48,11 @@ public class RecipeControllerTest {
     @Test
     public void getRecipes_callGetRecipesEndpoint_shouldReturnAllRecipes() {
         List<Recipe> recipesMock = new ArrayList();
-        recipesMock.add(RecipeMock.getRecipeMock());
+        recipesMock.add(RecipeMock.getRecipe());
 
-        Mockito.when(recipeServiceMock.getRecipes()).thenReturn(recipesMock);
+        Mockito.when(recipeServiceMock.getAllRecipes()).thenReturn(recipesMock);
 
-        List<Recipe> actualRecipes = recipeController.getRecipes().getBody();
+        List<Recipe> actualRecipes = recipeController.getRecipes(LocalDateTime.now(), LocalDateTime.now()).getBody();
         List<Recipe> expectedRecipes = recipesMock;
 
         Assertions.assertEquals(expectedRecipes.get(0).getId(), actualRecipes.get(0).getId());
