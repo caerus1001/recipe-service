@@ -52,7 +52,7 @@ public class RecipeControllerTest {
 
         Mockito.when(recipeServiceMock.getAllRecipes()).thenReturn(recipesMock);
 
-        List<Recipe> actualRecipes = recipeController.getRecipes(LocalDateTime.now(), LocalDateTime.now()).getBody();
+        List<Recipe> actualRecipes = recipeController.getRecipes(null, null).getBody();
         List<Recipe> expectedRecipes = recipesMock;
 
         Assertions.assertEquals(expectedRecipes.get(0).getId(), actualRecipes.get(0).getId());

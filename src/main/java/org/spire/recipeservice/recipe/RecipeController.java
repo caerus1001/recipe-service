@@ -30,9 +30,9 @@ public class RecipeController {
             @RequestParam(required = false) @DateTimeFormat(iso = ISO.DATE_TIME) LocalDateTime startDate,
             @RequestParam(required = false) @DateTimeFormat(iso = ISO.DATE_TIME) LocalDateTime endDate) {
 
-        return
-                startDate != null && endDate != null ? new ResponseEntity<>(recipeService.getRecipesByFromDate(startDate, endDate), HttpStatus.OK) :
-                new ResponseEntity<>(recipeService.getAllRecipes(), HttpStatus.OK);
+        return startDate != null && endDate != null
+                ? new ResponseEntity<>(recipeService.getRecipesByFromDate(startDate, endDate), HttpStatus.OK)
+                : new ResponseEntity<>(recipeService.getAllRecipes(), HttpStatus.OK);
     }
 
     @PutMapping("")
