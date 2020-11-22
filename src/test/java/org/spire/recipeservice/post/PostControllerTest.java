@@ -7,7 +7,13 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.junit.jupiter.MockitoExtension;
+import org.modelmapper.ModelMapper;
+import org.spire.recipeservice.exception.InvalidIdException;
+import org.spire.recipeservice.post.dto.CreatePostDto;
+import org.spire.recipeservice.post.dto.DeletePostDto;
+import org.spire.recipeservice.post.dto.UpdatePostDto;
 import org.spire.recipeservice.post.model.Post;
+import org.springframework.ui.Model;
 import stubs.PostMock;
 
 import java.util.ArrayList;
@@ -33,47 +39,57 @@ public class PostControllerTest {
         Assertions.assertEquals(expectedPosts.size(), actualPosts.size());
 
         Assertions.assertEquals(expectedPosts.get(0).getTitle(), actualPosts.get(0).getTitle());
-        Assertions.assertEquals(expectedPosts.get(0).getDate(), actualPosts.get(0).getDate());
+        Assertions.assertEquals(expectedPosts.get(0).getCreatedDate(), actualPosts.get(0).getCreatedDate());
 
         Assertions.assertEquals(expectedPosts.get(0).getAuthor().getId(), actualPosts.get(0).getAuthor().getId());
     }
 
     @Test
     public void addPost_callAddPostEndpoint_shouldReturn200OkAndSavedPost() {
+        ModelMapper modelMapper = new ModelMapper();
+
         Post postMock = PostMock.getPost();
-        Mockito.when(postService.addPost(postMock)).thenReturn(postMock);
+        CreatePostDto createPostObj = modelMapper.map(postMock, CreatePostDto.class);
+        Mockito.when(postService.createPost(createPostObj)).thenReturn(postMock);
 
         Post expectedPost = postMock;
-        Post actualPost = postController.addPost(postMock).getBody();
+        Post actualPost = postController.createPost(createPostObj).getBody();
 
         Assertions.assertEquals(expectedPost.getId(), actualPost.getId());
         Assertions.assertEquals(expectedPost.getTitle(), actualPost.getTitle());
-        Assertions.assertEquals(expectedPost.getDate(), actualPost.getDate());
+        Assertions.assertEquals(expectedPost.getCreatedDate(), actualPost.getCreatedDate());
 
         Assertions.assertEquals(expectedPost.getAuthor().getId(), actualPost.getAuthor().getId());
     }
 
     @Test
-    public void updatePost_callUpdatePostEndpoint_shouldReturnUpdatedSavedPost() {
+    public void updatePost_callUpdatePostEndpoint_shouldReturnUpdatedSavedPost() throws InvalidIdException  {
+        ModelMapper modelMapper = new ModelMapper();
+
         Post postMock = PostMock.getPost();
-        Mockito.when(postService.updatePost(postMock)).thenReturn(postMock);
+        postMock.setId("5fba2638b707441b23c03769");
+        UpdatePostDto updatePostDto = modelMapper.map(postMock, UpdatePostDto.class);
+        Mockito.when(postService.updatePost(updatePostDto)).thenReturn(postMock);
 
         Post expectedPost = postMock;
-        Post actualPost = postController.updatePost(postMock).getBody();
+        Post actualPost = postController.updatePost(updatePostDto).getBody();
 
         Assertions.assertEquals(expectedPost.getId(), actualPost.getId());
         Assertions.assertEquals(expectedPost.getTitle(), actualPost.getTitle());
-        Assertions.assertEquals(expectedPost.getDate(), actualPost.getDate());
+        Assertions.assertEquals(expectedPost.getCreatedDate(), actualPost.getCreatedDate());
 
         Assertions.assertEquals(expectedPost.getAuthor().getId(), actualPost.getAuthor().getId());
     }
 
     @Test
-    public void deletePost_callDeletePostEndpoint_shouldReturnTrue() {
+    public void deletePost_callDeletePostEndpoint_shouldReturnTrue() throws InvalidIdException {
+        ModelMapper modelMapper = new ModelMapper();
         Post postMock = PostMock.getPost();
-        Mockito.when(postService.deletePost(postMock)).thenReturn(true);
+        postMock.setId("5fba2638b707441b23c03769");
+        DeletePostDto deletePostDto = modelMapper.map(postMock, DeletePostDto.class);
+        Mockito.when(postService.deletePost(deletePostDto)).thenReturn(true);
 
-        boolean actualResponse = postController.deletePost(postMock).getBody();
+        boolean actualResponse = postController.deletePost(deletePostDto).getBody();
 
         Assertions.assertEquals(true, actualResponse);
     }

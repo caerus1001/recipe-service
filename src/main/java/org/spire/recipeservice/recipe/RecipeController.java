@@ -20,19 +20,19 @@ public class RecipeController {
         this.recipeService = recipeService;
     }
 
-    @PostMapping("")
-    public ResponseEntity<Recipe> addRecipe(@RequestBody Recipe recipe) {
-        return new ResponseEntity<>(recipeService.addRecipe(recipe), HttpStatus.OK);
-    }
-
     @GetMapping("")
     public ResponseEntity<List<Recipe>> getRecipes(
             @RequestParam(required = false) @DateTimeFormat(iso = ISO.DATE_TIME) LocalDateTime startDate,
             @RequestParam(required = false) @DateTimeFormat(iso = ISO.DATE_TIME) LocalDateTime endDate) {
 
-        return startDate != null && endDate != null
+        return startDate != null || endDate != null
                 ? new ResponseEntity<>(recipeService.getRecipesByFromDate(startDate, endDate), HttpStatus.OK)
                 : new ResponseEntity<>(recipeService.getAllRecipes(), HttpStatus.OK);
+    }
+
+    @PostMapping("")
+    public ResponseEntity<Recipe> addRecipe(@RequestBody Recipe recipe) {
+        return new ResponseEntity<>(recipeService.addRecipe(recipe), HttpStatus.OK);
     }
 
     @PutMapping("")
@@ -41,7 +41,7 @@ public class RecipeController {
     }
 
     @DeleteMapping("")
-    public ResponseEntity<Boolean> deleteRecipe(Recipe recipe) {
+    public ResponseEntity<Boolean> deleteRecipe(@RequestBody Recipe recipe) {
         return new ResponseEntity<>(recipeService.deleteRecipe(recipe), HttpStatus.OK);
     }
 

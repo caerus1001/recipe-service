@@ -1,6 +1,7 @@
 package org.spire.recipeservice.recipe;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -23,7 +24,16 @@ public class RecipeService {
     }
 
     public List<Recipe> getRecipesByFromDate(LocalDateTime startDate, LocalDateTime endDate) {
-        return recipeRepository.getAllByCreatedDateBetween(startDate, endDate);
+        List<Recipe> recipes = new ArrayList<>();
+        if (startDate != null && endDate != null) {
+            recipes = recipeRepository.getAllByCreatedDateBetween(startDate, endDate);
+        } else if (startDate != null && endDate == null) {
+            recipes = recipeRepository.getAllByCreatedDateAfter(startDate);
+        } else if (startDate == null && endDate != null) {
+            recipes = recipeRepository.getAllByCreatedDateBefore(endDate);
+        }
+
+        return recipes;
     }
 
     public Recipe updateRecipe(Recipe recipe) {

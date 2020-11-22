@@ -1,27 +1,27 @@
-package org.spire.recipeservice.post.model;
+package org.spire.recipeservice.post.dto;
+
+import java.util.List;
+import javax.validation.constraints.NotNull;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import org.spire.recipeservice.author.model.Author;
-import org.spire.recipeservice.Photo;
-import org.spire.recipeservice.recipe.Recipe;
-import org.springframework.data.annotation.CreatedDate;
-import org.springframework.data.annotation.Id;
 
-import java.time.LocalDateTime;
-import java.util.List;
+import org.spire.recipeservice.Photo;
+import org.spire.recipeservice.author.model.Author;
+import org.spire.recipeservice.recipe.Recipe;
+import org.springframework.data.annotation.Id;
 
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class Post {
+public class UpdatePostDto {
     @Id
-    private String id;
+    @NotNull
+    public String id;
     private String title;
     private String description;
-    @CreatedDate
-    private LocalDateTime createdDate;
+    private String date;
     private Recipe recipe;
     private Author author;
     private List<Photo> photos;

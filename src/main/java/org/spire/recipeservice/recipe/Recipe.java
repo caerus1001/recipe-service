@@ -3,6 +3,7 @@ package org.spire.recipeservice.recipe;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.spire.recipeservice.Nutrition;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.Id;
 
@@ -17,6 +18,7 @@ public class Recipe {
     private String id;
     private String title;
     private String description;
+    private Nutrition nutrition;
     private Review review;
     @CreatedDate
     private LocalDateTime createdDate;

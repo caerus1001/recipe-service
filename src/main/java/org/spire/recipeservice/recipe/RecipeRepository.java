@@ -8,4 +8,6 @@ import java.util.List;
 public interface RecipeRepository extends MongoRepository<Recipe, String> {
     public List<Recipe> getAllByTitleContaining(String title);
     public List<Recipe> getAllByCreatedDateBetween(LocalDateTime startDate, LocalDateTime endDate);
+    public List<Recipe> getAllByCreatedDateAfter(LocalDateTime startDate);
+    public List<Recipe> getAllByCreatedDateBefore(LocalDateTime endDate);
 }

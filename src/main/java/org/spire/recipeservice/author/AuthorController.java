@@ -1,4 +1,4 @@
-package org.spire.recipeservice.Author;
+package org.spire.recipeservice.author;
 
 import org.springframework.web.bind.annotation.RestController;
 
