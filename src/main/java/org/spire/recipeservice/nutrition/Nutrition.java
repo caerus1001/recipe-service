@@ -1,4 +1,4 @@
-package org.spire.recipeservice;
+package org.spire.recipeservice.nutrition;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;

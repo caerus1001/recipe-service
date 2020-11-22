@@ -2,16 +2,15 @@ package org.spire.recipeservice.recipe;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
 import org.springframework.stereotype.Service;
 
 @Service
 public class RecipeService {
-    private final RecipeRepository recipeRepository;
+    private final IRecipeRepository recipeRepository;
 
-    public RecipeService(RecipeRepository recipeRepository) {
+    public RecipeService(IRecipeRepository recipeRepository) {
         this.recipeRepository = recipeRepository;
     }
 

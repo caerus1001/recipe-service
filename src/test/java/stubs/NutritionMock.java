@@ -1,6 +1,6 @@
 package stubs;
 
-import org.spire.recipeservice.Nutrition;
+import org.spire.recipeservice.nutrition.Nutrition;
 
 public class NutritionMock {
     public static Nutrition getNutrition() {
